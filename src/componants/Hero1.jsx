@@ -6,12 +6,12 @@ export default function Hero1() {
       <div className="flex justify-center items-center h-screen w-full">
         <div className="w-full max-w-6xl px-6 lg:px-8">
           <div className="flex items-center h-full">
-            <div className="main-title max-w-2xl space-y-6">
+            <div className="main-title max-w-2xl space-y-12">
               <p className="inline-flex items-center justify-center bg-[#f2f3f5] text-black text-[12px] px-4 py-1 rounded-full font-semibold tracking-[0.2em]  shadow-sm">
                 Hi, new friend!
               </p>
 
-              <h1 className="text-[#171430] text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight tracking-tight">
+              <h1 className="text-[#171430] text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold ">
                 We do not cook,
                 <br className="hidden md:block" />
                 we create your emotions!

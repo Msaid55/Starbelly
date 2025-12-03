@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
+import ContactSidebar from "./ContactSidebar";
+import { BiDotsVerticalRounded } from "react-icons/bi";
+
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
 
   const navItems = [
     { to: "/", label: "Home" },
@@ -27,7 +31,7 @@ export default function Navbar() {
             />
           </NavLink>
 
-          {/* Desktop Menu */}
+          {/* Desktop links */}
           <ul className="hidden md:flex gap-12 text-[#231e41] font-medium">
             {navItems.map((item) => (
               <li key={item.to}>
@@ -35,8 +39,8 @@ export default function Navbar() {
                   to={item.to}
                   end
                   className={({ isActive }) =>
-                    `relative flex items-center gap-2 transition duration-300 
-                    ${isActive ? "text-[#231e41]" : "text-[#231e41]"} 
+                    `relative flex items-center gap-2 transition duration-300
+                    ${isActive ? "text-[#231e41]" : "text-[#231e41]"}
                     hover:text-[#ffc107]`
                   }
                 >
@@ -53,30 +57,64 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Cart + Menu Button */}
+          {/* Right side (contact + cart + burger) */}
           <div className="flex items-center gap-3">
+           
+            {/* زر الكارت – يظهر في كل المقاسات */}
             <button
               type="button"
-              onClick={() => setCartOpen((prev) => !prev)}
-              className="relative w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#eaeaea] hover:bg-[#f2f3f5] transition duration-300"
+              onClick={() => {
+                setCartOpen((prev) => !prev);
+                setContactOpen(false);
+              }}
+              className="relative w-10 h-10 md:w-[52px] md:h-[52px] flex items-center justify-center rounded-full bg-[#f2f3f5] hover:bg-[#eaeaea] transition duration-300"
             >
               <img
                 src="https://starbelly-react.vercel.app/img/ui/icons/cart.svg"
-                className="w-5 h-[22px]"
+                className="w-5 h-5 md:h-[22px]"
                 alt="icon"
               />
-              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#171430] text-[11px] text-white">
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 md:h-5 md:w-5 items-center justify-center rounded-full bg-[#f5c332] text-[10px] md:text-[11px] text-black">
                 3
               </span>
             </button>
 
-            <button className="md:hidden" onClick={() => setOpen(!open)}>
-              {open ? <FiX size={28} /> : <FiMenu size={28} />}
+              {/* زر الكونتاكت – يظهر على الديسكتوب والموبايل */}
+              <button
+              type="button"
+              onClick={() => {
+                setContactOpen((prev) => !prev);
+                setCartOpen(false);
+              }}
+              className="inline-flex w-10 h-10 md:w-[52px] md:h-[52px] items-center justify-center rounded-full bg-[#f2f3f5] hover:bg-[#eaeaea] transition duration-300"
+            >
+              <span className="text-[#231e41] text-xl font-semibold leading-none">
+              <BiDotsVerticalRounded />
+              </span>
+            </button>
+
+            {/* زر الهامبورجر – موبايل بس */}
+            <button
+              className="md:hidden"
+              onClick={() => setOpen((prev) => !prev)}
+            >
+              {open ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Contact sidebar */}
+        <AnimatePresence>
+          {contactOpen && (
+            <ContactSidebar
+              open={contactOpen}
+              onClose={() => setContactOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Mobile menu */}
+
         <AnimatePresence>
           {open && (
             <motion.ul
@@ -116,7 +154,7 @@ export default function Navbar() {
             />
 
             <motion.aside
-              className="fixed right-0 top-[120px] h-[calc(100vh-80px)] w-full max-w-md bg-white shadow-2xl z-50 flex flex-col"
+              className="fixed right-0 top-[120px] h-[calc(100vh-120px)] w-full max-w-md bg-white shadow-2xl z-50 flex flex-col"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -162,7 +200,9 @@ export default function Navbar() {
                     />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-[#171430]">Cheese Burger</p>
+                    <p className="font-medium text-[#171430]">
+                      Cheese Burger
+                    </p>
                     <p className="text-sm text-gray-500">1 × $10.00</p>
                   </div>
                   <p className="font-semibold text-[#171430]">$10.00</p>
